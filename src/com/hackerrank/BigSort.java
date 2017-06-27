@@ -56,34 +56,17 @@ public static final int BIG_THRESHOLD_LOG = (int)Math.log10(Long.MAX_VALUE)+1;
 VersaInt (String init) {
 
    String numString = stripLeadingZeroes(init);
-   int condBigThreshold;
 
-   if(numString.charAt(0)=='-')
-      condBigThreshold = BIG_THRESHOLD_LOG +1;
-   else
-      condBigThreshold = BIG_THRESHOLD_LOG;
-
-   if(numString.length() > BIG_THRESHOLD_LOG) {
-      isBigInteger = true;
-      bigRep = new BigInteger(init);
-   }
-   else if (init.length() < BIG_THRESHOLD_LOG){
+   try {
       isBigInteger = false;
       longRep = Long.parseLong(numString);
    }
-   else {
-      // we aren't sure, so we will try to construct a long if it fails we will construct a
-      // BigInteger
-      try {
-         isBigInteger = false;
-         longRep = Long.parseLong(numString);
-      }
-      catch(NumberFormatException e)
-      {
-         isBigInteger = true;
-         bigRep = new BigInteger(numString);
-      }
+   catch(NumberFormatException e)
+   {
+      isBigInteger = true;
+      bigRep = new BigInteger(numString);
    }
+
 }
 
 public static String stripLeadingZeroes(String str) {
@@ -137,7 +120,7 @@ public int compareTo(VersaInt other) {
 
 
 public int compareTo(Long other) {
-   return -1;
+   return isBig() ? 1 : longRep.compareTo(other);
 }
 
 @Override
@@ -153,10 +136,16 @@ public int compareTo(Object other) {
    if (other instanceof VersaInt) {
       return compareTo((VersaInt) other);
    }
-   if(other instanceof Long) {
+   if(other instanceof Short) {
+      return compareTo((Long)other);
+   }
+   else if(other instanceof Integer ) {
+      return compareTo((Long)other);
+   }
+   else if(other instanceof Long) {
       return compareTo((Long) other);
    }
-   return 0;
+   return this.compareTo(other);
 }
 }
 
