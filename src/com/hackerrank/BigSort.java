@@ -16,15 +16,15 @@ public static void main(String[] args) {
    String strNum;
    Object newObject;
 
-   BigInteger[] unsorted = new BigInteger[n];
+   VersaInt[] unsorted = new VersaInt[n];
    for(int idx=0; idx < n; idx++){
       strNum = in.next();
-      unsorted[idx] = new BigInteger (strNum);
+      unsorted[idx] = new VersaInt (strNum);
    }
 
    java.util.Arrays.sort(unsorted);
 
-   for(BigInteger currLong: unsorted) {
+   for(VersaInt currLong: unsorted) {
       System.out.println(currLong);
    }
 
@@ -109,13 +109,13 @@ public int compareTo(BigInteger other) {
 public int compareTo(VersaInt other) {
    if(this.isBig() && other.isBig())
       return this.bigRep.compareTo(other.bigRep);
-   if(this.isBig() && !other.isBig())
+   else if(this.isBig() && !other.isBig())
       return 1;
-   if(!this.isBig() && other.isBig())
+   else if(!this.isBig() && other.isBig())
       return -1;
-   if(!this.isBig() && !other.isBig())
+   else if(!this.isBig() && !other.isBig())
       return this.longRep.compareTo(other.longRep);
-   return 0;
+   else return 0;
 }
 
 
