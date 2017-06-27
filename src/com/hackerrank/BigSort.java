@@ -9,6 +9,22 @@ import java.util.Arrays;
 
 public class BigSort {
 
+/**
+ * Comparatorfor sorting strings by length()
+ */
+public static Comparator<String> StringLengthComparator =
+      new  Comparator<String> () {
+
+         public int compare(String s1, String s2) {
+            if(s1.length()<s2.length())
+               return -1;
+            else if(s1.length()==s2.length()) {
+               return s1.compareTo(s2);
+            }
+            else  return 1;
+         }
+      };
+
 public static void main(String[] args) {
    Scanner in = new Scanner(System.in);
    int n = in.nextInt();
@@ -16,25 +32,44 @@ public static void main(String[] args) {
    String strNum;
    Object newObject;
 
-   VersaInt[] unsorted = new VersaInt[n];
-   for(int idx=0; idx < n; idx++){
-      strNum = in.next();
-      unsorted[idx] = new VersaInt (strNum);
+    String[] unsorted = new String[n];
+   for(int idx=0; idx < n; idx++) {
+      unsorted[idx] = in.next();
    }
 
-   java.util.Arrays.sort(unsorted);
+   java.util.Arrays.sort(unsorted, StringLengthComparator);
 
-   for(VersaInt currLong: unsorted) {
+   /*
+   for(String currLong: unsorted) {
       System.out.println(currLong);
+   }      */
+
+   /*
+   VersaInt[] aryNumbers = new VersaInt[n];
+   // now we convert these to Versa Int and sort
+   for(int idx=0; idx<unsorted.length; idx++) {
+      aryNumbers[idx] = new VersaInt(unsorted[idx]);
    }
 
+   java.util.Arrays.sort(aryNumbers);
+   */
+
+   StringBuilder output = new StringBuilder();
+
+   for(int idx =0; idx < unsorted.length; idx++) {
+      output.append(unsorted[idx]);
+      output.append("\n");
+   }
+   System.out.println(output);
 }
 }
 
-// versa int can be an integer of any size and compares appropriately
-// when constructed, a VersaInt will check the string length if it will fit in a Long, it will
-// be represented as a long.  If not it will be placed in a BigInteger.
-
+/**
+ * Verse Int can be an integer of any size and compares appropriately when
+ * constructed, a VersaInt will check the string length if it will fit in a
+ * Long, it will be represented as a long.  If not, it will be place in a
+ * BigInteger.
+ */
 class VersaInt implements Comparable {
 
 private boolean isBigInteger;    // indicates if this is a BigInteger.
@@ -55,16 +90,16 @@ public static final int BIG_THRESHOLD_LOG = (int)Math.log10(Long.MAX_VALUE)+1;
 
 VersaInt (String init) {
 
-   String numString = stripLeadingZeroes(init);
+   //String numString = stripLeadingZeroes(init);
 
    try {
       isBigInteger = false;
-      longRep = Long.parseLong(numString);
+      longRep = Long.parseLong(init);
    }
    catch(NumberFormatException e)
    {
       isBigInteger = true;
-      bigRep = new BigInteger(numString);
+      bigRep = new BigInteger(init);
    }
 
 }
