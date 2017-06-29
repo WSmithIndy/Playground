@@ -3,18 +3,29 @@ package com.hackerrank;
 import java.io.*;
 import java.util.*;
 
-public class Solution {
+
+public class LoopInvariant {
 
 public static void insertionSort(int[] A){
-   for(int i = A.length-1; i >=0; i--){
+   // the sorted portion will be on the left
+   // assume the first element is sorted
+   // add additional elements immediately to the right
+   for(int i = 1; i < A.length; i++){
+      // this is the element to move leftward into the sorted region
       int value = A[i];
+      // We will be comapring to the left
       int j = i - 1;
-      while(j >= 0 && A[j] > value){
+      // if the element on the
+      while(j >= 0 && value < A[j]){
+         // shift elements to the right to make room for the value
          A[j + 1] = A[j];
+         // decrement the index
          j--;
       }
+      // we have found the position of the value ... 
       A[j + 1] = value;
    }
+
    printArray(A);
 }
 
