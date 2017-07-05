@@ -1,11 +1,12 @@
 package com.hackerrank.dataStructures;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class Java1DArray {
 public static boolean canWin(int leap, int[] game) {
    // Return true if you can win the game; otherwise, return false.
-   boolean canMove = false;
+   //  boolean canMove = false;
    boolean canWin = false;
    boolean bLastUp1 = false;
    int pos = 0;
@@ -36,30 +37,21 @@ public static boolean canWin(int leap, int[] game) {
    }
 }
 public static void main(String[] args) {
-   Scanner scan = new Scanner(System.in);
-   int q = scan.nextInt();
-   while (scan.hasNext()) {
 
-      int n = scan.nextInt();
-      int leap = scan.nextInt();
-      scan.nextLine();
-       /*
-      int[] game = new int[n];
-      for (int i = 0; i < n; i++) {
-         game[i] = scan.nextInt();
-      }
-      */
-      String   curLine = scan.nextLine();
-      String[] tokenAry = curLine.split(" ");
+   Scanner s = new Scanner(System.in);
+   int nGames = s.nextInt();
 
-      // convert to integer array
-      int[] digitAry = new int[tokenAry.length];
-      for(int i=0; i<digitAry.length; i++) {
-         digitAry[i] = Integer.parseInt(tokenAry[i]);
-      }
-      System.err.printf("%d %d\n", n, leap);
-      System.out.println( (canWin(leap, digitAry)) ? "YES" : "NO" );
-   }
-   scan.close();
+   IntStream.range(0, nGames).forEach(i -> {
+      s.nextLine();
+      int n = s.nextInt();
+      int leap = s.nextInt();
+      int[] arr = new int[n];
+      s.nextLine();
+
+      // populate array
+      IntStream.range(0, n).forEach(j -> arr[j] = s.nextInt());
+      // if index < array length, then goal never completed
+      System.out.println(canWin(leap,arr)? "YES": "NO") ;
+   });
 }
 }
