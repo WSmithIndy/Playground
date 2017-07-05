@@ -10,8 +10,9 @@ static void beginQuickSort(int[] ar) {
 
 static void quickSort(int[] ar, int begin, int end)
 {
+   /*
    if( (begin!=0 || end!=ar.length) && begin<=end)
-      printArray(ar, begin,end);
+      printArray(ar, begin,end);     */
 
    if(begin >= end)
       return;
@@ -22,7 +23,9 @@ static void quickSort(int[] ar, int begin, int end)
    }
    int pivotPos = partition(ar, begin, end);
    quickSort(ar, begin, pivotPos-1);
+   printArray(ar);
    quickSort(ar, pivotPos+1,end);
+   //printArray(ar);
 
    /*
    if(begin>=0 && pivotPos-1<ar.length)
@@ -30,7 +33,6 @@ static void quickSort(int[] ar, int begin, int end)
    if(pivotPos-1>0 && end<ar.length) {
       printArray(ar, pivotPos - 1, end);
    } */
-
 }
 
 private static void sort2(int[] ar, int begin, int end) {
@@ -54,7 +56,7 @@ public static void main(String[] args) {
       aryNums[i] = in.nextInt();
    }
    quickSort(aryNums, 0,aryNums.length-1);
-   printArray(aryNums);
+   //printArray(aryNums);
 }
 
 public static int partition(int[] aryNums, int start, int end) {
