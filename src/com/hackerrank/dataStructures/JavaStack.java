@@ -1,5 +1,7 @@
 package com.hackerrank.dataStructures;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
@@ -16,33 +18,46 @@ public static void main(String []argh)
 {
 
    Scanner sc = new Scanner(System.in);
+   Stack<Character> grprStack = new Stack<Character>();
 
    while (sc.hasNext()) {
-      String input=sc.next();
-      // put the string into a character array
-      List<Character> grprList = new ArrayList<Character>();
-      for(int i=0; i<input.length(); i++) {
-         grprList.add(input.charAt(i));
-      }
-      // remove any spaces
-      //grprList.removeIf( c -> c==' ');
-      // strategy match first and last grouping symbol ...
-      // if they match remove first and last
-      boolean isBalanced = true;
-      boolean keepChecking = true;
-      while(grprList.size() > 0 && keepChecking) {
-         if (endsMatch(grprList))
-            trimEnds(grprList);
-         else   {
-            isBalanced = false;
-            keepChecking = false;
+      // be sure to empty the stack each time around.
+      grprStack.clear();
+      String input = sc.next();
+
+      // read each grouping symbol
+      for (int i = 0; i < input.length(); i++) {
+         char crChar = input.charAt(i);
+
+         // if this is an open symbol, push it onto the stack
+         if( isOpenGrouper(crChar))
+            grprStack.add(crChar);
+         else {
+            // check to see if there is a matching grouping symbol to the left ..
+            if(groupersMatch(grprStack.peek(),crChar))
+               // if so pop it
+               grprStack.pop();
          }
-      }  // while
-      if(isBalanced == true)
-         System.out.println(true);
-      else
-         System.out.println(false);
-   }
+      } //for
+
+      // if the stack is empty, then it is balanced
+      System.out.println(grprStack.isEmpty());
+   } //while
+
+}
+
+public static boolean isOpenGrouper(char c) {
+   return (c==OPEN_BRACE || c==OPEN_BRACKET || c==OPEN_PAREN);
+}
+
+public static boolean groupersMatch(char left, char right) {
+   if(left==OPEN_BRACE && right==CLOSE_BRACE)
+      return true;
+   if(left==OPEN_BRACKET && right == CLOSE_BRACKET)
+      return true;
+   if(left==OPEN_PAREN && right==CLOSE_PAREN)
+      return true;
+   return false;
 }
 
 public static boolean endsMatch(List<Character> charList) {
