@@ -9,11 +9,10 @@ public static void main(String[] args) {
 
    int n = in.nextInt();
    int ssLen = in.nextInt();
-
    /* ArrayList<Integer> numList = new ArrayList<Integer>();
    numList.ensureCapacity(n);        */
    int[] numAry = new int[n];
-
+   
    // put data in the deque
    for (int i = 0; i < n; i++) {
       int num = in.nextInt();
@@ -21,37 +20,39 @@ public static void main(String[] args) {
       //numList.add(num);
       numAry[i] = num;
    }
-
    // search for uniqueness
-   int maxUnqVals = 0;
+   HashMap<Integer, Integer> crSet = new HashMap<>();
 
-   for (int start = 0; start <= numAry.length - ssLen; start++) {
-      HashMap<Integer, Integer> crSet = new HashMap<>();
+   // seed the hashMap with the initial subset of values
+   for(int pos=0; pos<ssLen; pos++) {
+      int crNum = numAry[pos];
+      int crFreq = crSet.getOrDefault(crNum,0);
+      crSet.put(numAry[pos],++crFreq);
+   }
+   int maxUnqVals = crSet.size();
 
-      for (int pos = start; pos < start + ssLen; pos++) {
-         // check if the current element is in the subsequence "so far"
-         //int crNum = numList.get(pos);
-         int crNum = numAry[pos];
-         // if it's not it the current
-         int crFreq = crSet.getOrDefault(crNum,0);
+   // interate over all positions
+   for(int start =1; start<=numAry.length - ssLen; start++) {
+      // adjust the previous frequency count
+      int prvNum = numAry[start-1];
+      int crFreq = crSet.getOrDefault(prvNum,0);
+      if(crFreq == 1)
+         crSet.remove(prvNum);
+      else
+         crSet.put(prvNum, --crFreq);
 
-         if( crFreq == 0 ) {
-            crSet.put(crNum,1);
-         }       /*
-         else {
-            //crSet.put(crNum,crFreq++);
-         }    */
-      }  // for
-      // STATE - a frequency map is present for the current subset of values
-      int numUnqVals = 0;
-      // count the number of unique keys in this subset
-      //crSet.forEach((k,v)->numUnqVals++);
-      //numUnqVals = crSet.entrySet().size();
-      numUnqVals = crSet.size();
+      // adjust the next frequency count
+      int nxtNum = numAry[start+ssLen-1];
+      int nxtFrq = crSet.getOrDefault(nxtNum,0);
+      if(nxtFrq==0)
+         crSet.put(nxtNum,1);
+      else
+         crSet.put(nxtNum,++nxtFrq);
 
-      maxUnqVals = Math.max(maxUnqVals, numUnqVals);
-   } // for iterating over subsets
-
+      int crNumUnq = crSet.size();
+      maxUnqVals = Math.max(maxUnqVals, crNumUnq);
+   }
+   
    System.out.println(maxUnqVals);
 }
 }
