@@ -9,35 +9,38 @@ public static void main(String[] args) {
 
    int n = in.nextInt();
    int ssLen = in.nextInt();
-   ArrayList<Integer> numList = new ArrayList<Integer>();
-   numList.ensureCapacity(n);
+
+   /* ArrayList<Integer> numList = new ArrayList<Integer>();
+   numList.ensureCapacity(n);        */
+   int[] numAry = new int[n];
 
    // put data in the deque
    for (int i = 0; i < n; i++) {
       int num = in.nextInt();
       //deque.add(num);
-      numList.add(num);
+      //numList.add(num);
+      numAry[i] = num;
    }
 
    // search for uniqueness
    int maxUnqVals = 0;
 
-   for (int start = 0; start <= numList.size() - ssLen; start++) {
+   for (int start = 0; start <= numAry.length - ssLen; start++) {
       HashMap<Integer, Integer> crSet = new HashMap<>();
 
       for (int pos = start; pos < start + ssLen; pos++) {
          // check if the current element is in the subsequence "so far"
-         int crNum = numList.get(pos);
+         //int crNum = numList.get(pos);
+         int crNum = numAry[pos];
          // if it's not it the current
-
          int crFreq = crSet.getOrDefault(crNum,0);
 
          if( crFreq == 0 ) {
             crSet.put(crNum,1);
-         }
+         }       /*
          else {
-            crSet.put(crNum,crFreq++);
-         }
+            //crSet.put(crNum,crFreq++);
+         }    */
       }  // for
       // STATE - a frequency map is present for the current subset of values
       int numUnqVals = 0;
