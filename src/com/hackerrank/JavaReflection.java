@@ -26,7 +26,7 @@ public class JavaReflection {
 
 public static void main(String[] args){
 
-   String strClsNm = "com.hackerrank.Student";
+   String strClsNm = "com.hackerrank.Student2";
    Class stdntCls=null;
    try {
       stdntCls = Class.forName(strClsNm);
