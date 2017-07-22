@@ -7,11 +7,16 @@ public class WordAppend {
    public String wordAppend(String[] strings) {
       Map<String, Integer> frqMap = new HashMap<>();
 
+      StringBuilder bldResultStr = new StringBuilder();
+
       // count frequencies of elements
       for( String crStr : strings ) {
          if( frqMap.containsKey(crStr) ) {
             int crVal = frqMap.get(crStr);
-            frqMap.put(crStr, crVal + 1);
+            crVal++;
+            if(crVal >=2 && crVal%2==0)
+               bldResultStr.append(crStr);
+            frqMap.put(crStr, crVal);
          }else {
             frqMap.put(crStr, 1);
          }
@@ -21,19 +26,8 @@ public class WordAppend {
       // iterate through the values and
       // append ones where that
       // appear once, twice, etc..
-      StringBuilder bldResultStr = new StringBuilder();
-
-      for( String crKey : frqMap.keySet() ) {
-         int crFrq = frqMap.get(crKey);
-         if(crFrq % 2 == 0) {
-            for(int i=2; i<=crFrq; i+=2) {
-               bldResultStr.append(crKey);
-            }
-         }
-      }
 
       return bldResultStr.toString();
-
    }
 
 }
