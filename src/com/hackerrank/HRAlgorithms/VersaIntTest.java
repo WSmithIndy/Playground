@@ -1,5 +1,6 @@
-package com.hackerrank;
+package com.hackerrank.HRAlgorithms;
 
+import com.hackerrank.HRAlgorithms.VersaInt;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public void tearDown() throws Exception {
 
 @Test
 public void stripLeadingZeroes() throws Exception {
-   assertEquals("1234",VersaInt.stripLeadingZeroes("1234"));
+   assertEquals("1234", VersaInt.stripLeadingZeroes("1234"));
    assertEquals("1234",VersaInt.stripLeadingZeroes("01234"));
    assertEquals("1234", VersaInt.stripLeadingZeroes("001234"));
    assertEquals("",VersaInt.stripLeadingZeroes("0000"));

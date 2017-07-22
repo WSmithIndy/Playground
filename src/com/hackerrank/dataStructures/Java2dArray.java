@@ -19,7 +19,7 @@ public static void main(String[] args) {
 
    // scan the 2d array, bound by possible "hourglass" locations
    // create keep track of the largest hourglass sum.
-   int maxSum = 0;
+   int maxSum = Integer.MIN_VALUE;
    for(int rw=0; rw<=3; rw++) {
       for(int cl=0; cl<=3; cl++) {
          int currSum = sumHourGlass(arr,rw,cl);

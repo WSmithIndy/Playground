@@ -1,4 +1,4 @@
-package com.hackerrank;
+package com.hackerrank.HR30Days;
 
 import java.io.*;
 import java.util.*;

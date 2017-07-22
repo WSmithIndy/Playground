@@ -1,4 +1,4 @@
-package com.hackerrank;
+package com.hackerrank.HRAlgorithms;
 import java.io.*;
 import java.util.*;
 import java.text.*;
